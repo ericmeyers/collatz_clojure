@@ -1,5 +1,6 @@
 (ns collatz-clojure.core
-  (:require [oz.core :as oz])
+  (:require [scicloj.kindly.v4.kind :as kind]
+            [scicloj.clay.v2.api :as clay])
   (:gen-class))
 
 
@@ -13,28 +14,25 @@
 
 
 
-(def xs (range 1 1000000))
-(def ys (map collatz-length-brian xs))
+(def xs  (range 1 100000))
+(def ys  (mapv collatz-length-brian xs))
 
-(defn make-data [xs ys]
-   (map (fn [x y] {:x x :y y}) xs ys))
 
-(def myplot
-  {
-   :title "Collatz Fun in Clojure",
-   :data {:values (make-data xs ys)}
-   :encoding {:x {:field "x" :type "quantitative" }
-              :y {:field "y" :type "quantitative" }
-              :color {:field "item" :type "nominal" :legend nil}}
-   :selection {:brush {:type "interval" :bind "scales" }}
-   :mark "point"
-   :width  800
-   :height 600
-  })
+
+
+(def trace1
+  {:x xs
+   :y ys
+   :mode "markers"
+   :type "scatter"})
+
+(def lay
+  {:title "Collatz Fun in Clojure"})
 
 
 
 (defn -main
   [& args]
-  (oz/start-server!)
-  (oz/view! myplot))
+  (clay/start!)
+  (clay/make!  {:single-form '(kind/plotly {:data [trace1] :layout lay}  )})
+  )
