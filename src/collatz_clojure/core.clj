@@ -1,6 +1,5 @@
 (ns collatz-clojure.core
-  (:require [scicloj.kindly.v4.kind :as kind]
-            [scicloj.clay.v2.api :as clay])
+  (:require [com.hypirion.clj-xchart :as c])
   (:gen-class))
 
 
@@ -14,25 +13,14 @@
 
 
 
-(def xs  (range 1 100000))
+(def xs  (range 1 1000000))
 (def ys  (mapv collatz-length-brian xs))
 
 
 
-
-(def trace1
-  {:x xs
-   :y ys
-   :mode "markers"
-   :type "scatter"})
-
-(def lay
-  {:title "Collatz Fun in Clojure"})
-
-
+(def chart (c/xy-chart {"Collatz Fun in Clojure"  {:x xs :y ys}} {:legend {:visible? false} :x-axis {:title "Value"} :y-axis {:title "Length"} :title "Collatz Length" :render-style :scatter}))
 
 (defn -main
   [& args]
-  (clay/start!)
-  (clay/make!  {:single-form '(kind/plotly {:data [trace1] :layout lay}  )})
+  (c/view chart)
   )
