@@ -5,7 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
 
   :dependencies [[org.clojure/clojure "1.12.1"]
-                 [com.hypirion/clj-xchart "0.2.0"]]
+                 [incanter "1.9.3"]]
 
   :main ^:skip-aot collatz-clojure.core
   :target-path "target/%s"
